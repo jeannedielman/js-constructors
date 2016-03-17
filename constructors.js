@@ -22,7 +22,7 @@ function Spell (name, cost, description) {
    * @name getDetails
    * @return {string} details containing all of the spells information.
    */
-   
+
    this.getDetails = function(){
       return "Spell name: " + name + " Cost: " + cost + " Description: " + description;
    }
@@ -53,8 +53,12 @@ function Spell (name, cost, description) {
  * @property {string} description
  */
 
-// var damageSpell = new Spell('Damage Spell', 23, 42, 'Deals damage');
+function DamageSpell(name, cost, damage, description){
+   Spell.call(this, name, cost, description);
+   this.damage = damage;
+};
 
+DamageSpell.prototype = Object.create(Spell.prototype);
 
 /**
  * Now that you've created some spells, let's create
@@ -73,6 +77,14 @@ function Spell (name, cost, description) {
  * @method  invoke
  */
 
+function Spellcaster(name, health, mana, isAlive){
+   this.name = name;
+   this.health = health;
+   this.mana = mana;
+   this.isAlive = true;
+   
+
+
   /**
    * @method inflictDamage
    *
@@ -84,6 +96,15 @@ function Spell (name, cost, description) {
    * @param  {number} damage  Amount of damage to deal to the spellcaster
    */
 
+   this.inflictDamage = function(damage){
+      this.health -= damage;
+      if (this.health <= 0) {
+         this.isAlive = false;
+         this.health = 0;
+      }
+   }
+}
+
   /**
    * @method spendMana
    *
@@ -93,6 +114,8 @@ function Spell (name, cost, description) {
    * @param  {number} cost      The amount of mana to spend.
    * @return {boolean} success  Whether mana was successfully spent.
    */
+
+
 
   /**
    * @method invoke
